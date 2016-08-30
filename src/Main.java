@@ -6,93 +6,113 @@ public class Main {
 
         MusicPiece piece1 = new MusicPiece();
 
-        piece1.title = "Symphony No. 3 in Eb, \"Eroica\"";
-        piece1.composer = "Ludwig van Beethoven";
-        piece1.year = 1803;
-        piece1.genre = "Orchestral Symphony";
-        piece1.hasText = false;
-        piece1.needsConductor = true;
-        piece1.bestRecordings = new String[3];
-        piece1.bestRecordings[0] = "Berlin Philharmonic, 1992";
-        piece1.bestRecordings[1] = "Wiener Philharmoniker, 1988";
-        piece1.bestRecordings[2] = "Cleveland Symphony, 2008";
+        piece1.setTitle("Symphony No. 3 in Eb, \"Eroica\"");
+        piece1.setComposer("Ludwig van Beethoven");
+        piece1.setYear(1803);
+        piece1.setGenre("Orchestral Symphony");
+        piece1.activateNeedsConductor();
+        String[] best = new String[] {"Berlin Philharmonic, 1992", "Wiener Philharmoniker, 1988", "Cleveland Symphony, 2008"};
+        piece1.setBestRecordings(best);
 
-        System.out.println(piece1.title + " by " + piece1.composer + ", recorded by " + piece1.bestRecordings[0]);
+        System.out.println(piece1.getTitle() + " composed by " + piece1.getComposer() + " in " + piece1.getYear() + ", recorded by " + piece1.getBestRecordings()[0]);
+        if(piece1.isNeedsConductor()) {
+            System.out.println("This " + piece1.getGenre() + " piece requires a conductor for performance");
+        }
 
         //Plays a very scripted game of battleship with the ship1 object as our first game piece being destroyed
 
-        BattleshipPlacements ship1 = new BattleshipPlacements();
+        BattleshipPlacements ship1 = new BattleshipPlacements(3);
 
-        ship1.type = "Destroyer";
-        ship1.position = new String[3];
-        ship1.position[0] = ship1.possiblePositions[2][2];
-        ship1.position[1] = ship1.possiblePositions[3][2];
-        ship1.position[2] = ship1.possiblePositions[4][2];
-        ship1.hitCounter = 0;
-        ship1.isSunk = false;
+        String[][] gameBoard = ship1.startGame();
+        String[] myPosition = new String[] {gameBoard[2][2], gameBoard[3][2], gameBoard[4][2]};
 
-        ship1.hitCounter++;
-        System.out.println("Hit at " + ship1.position[ship1.hitCounter - 1] + ". " + ship1.hitCounter + " hit(s). Has your "
-        + ship1.type + " sunk? " + ship1.isSunk);
+        ship1.setPosition(myPosition);
 
-        ship1.hitCounter++;
-        System.out.println("Hit at " + ship1.position[ship1.hitCounter - 1] + ". " + ship1.hitCounter + " hit(s). Has your "
-                + ship1.type + " sunk? " + ship1.isSunk);
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+        + ship1.getType() + " sunk? " + ship1.getIsSunk());
 
-        ship1.hitCounter++;
-        ship1.isSunk = true;
-        System.out.println("Hit at " + ship1.position[ship1.hitCounter - 1] + ". " + ship1.hitCounter + " hit(s). Has your "
-                + ship1.type + " sunk? " + ship1.isSunk);
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+                + ship1.getType() + " sunk? " + ship1.getIsSunk());
+
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+                + ship1.getType() + " sunk? " + ship1.getIsSunk());
+        System.out.println();
+
+
+        //// RESETS GAME SO I CAN PLAY AGAIN WITH SAME OBJECT BUT CHANGE SHIP TYPES AND POSITIONS
+
+        ship1.resetGame();
+
+        ship1.setType(4);
+        String[] myNewPosition = new String[] {gameBoard[1][1], gameBoard[1][2], gameBoard[1][3], gameBoard[1][4]};
+
+        ship1.setPosition(myNewPosition);
+
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+                + ship1.getType() + " sunk? " + ship1.getIsSunk());
+
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+                + ship1.getType() + " sunk? " + ship1.getIsSunk());
+
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+                + ship1.getType() + " sunk? " + ship1.getIsSunk());
+
+        ship1.hit();
+        System.out.println("Hit at " + ship1.getPosition()[ship1.getHitCounter() - 1] + ". " + ship1.getHitCounter() + " hit(s). Has your "
+                + ship1.getType() + " sunk? " + ship1.getIsSunk());
 
 
         // Last idea definitely went overboard (pun intended). This object will describe a type of penguin.
 
-        Penguin penguin1 = new Penguin();
-        penguin1.species = "Emperor Penguin";
-        penguin1.eats = new String[]{"Fish", "Larger Fish", "Smaller Fish", "Smaller Penguins?"};
-        penguin1.numberOfWings = 1;
 
-        System.out.println("Your penguin is a(n) " + penguin1.species + ", it eats " +
-        penguin1.eats[0] + ", " + penguin1.eats[1] + ", " + penguin1.eats[2] + ", and possibly "
-        + penguin1.eats[3] + " He has " + penguin1.numberOfWings + " wing, because this refers to a very specific penguin who's been in an accident.");
+        String[] food = new String[]{"Fish", "Larger Fish", "Smaller Fish", "Smaller Penguins?"};
+
+        Penguin penguin1 = new Penguin("Emperor Penguin", food, 1);
+
+        System.out.println("Your penguin is a(n) " + penguin1.getSpecies() + ", it eats " +
+        penguin1.getEats()[0] + ", " + penguin1.getEats()[1] + ", " + penguin1.getEats()[2] + ", and possibly "
+        + penguin1.getEats()[3] + " He has " + penguin1.getNumberOfWings() + " wing, because this refers to a very specific penguin who's been in an accident.");
+        penguin1.quack();
 
 
 
         // Purchase order app that takes orders of multiple products and totals the costs
 
-        PurchaseOrders order1 = new PurchaseOrders();
+        Product product1 = new Product();
+        product1.setProduct(3);
+        product1.setPrice(5.99);
+        product1.setProductTotal(4);
 
-        order1.date = "Oct. 1, 2016";
-        order1.product1 = order1.products[3];
-        order1.product1Price = 5.99;
-        order1.product1Amt = 4;
-        order1.product1Total = ( order1.product1Price * order1.product1Amt );
+        Product product2 = new Product(0, 28.45);
+        product2.setProductTotal(2);
 
-        order1.product2 = order1.products[0];
-        order1.product2Price = 28.45;
-        order1.product2Amt = 2;
-        order1.product2Total = ( order1.product2Price * order1.product2Amt );
+        Product product3 = new Product(4, 1.33, 11);
+
+        double[] totals = new double[] {product1.getProductTotal(), product2.getProductTotal(), product3.getProductTotal()};
 
 
-        order1.product3 = order1.products[4];
-        order1.product3Price = 1.33;
-        order1.product3Amt = 11;
-        order1.product3Total = ( order1.product3Price * order1.product3Amt );
 
-        order1.grandTotal = ( order1.product1Total + order1.product2Total + order1.product3Total ) * order1.tax;
+        PurchaseOrders order1 = new PurchaseOrders("Oct. 1, 2016", totals);
 
-        System.out.println("On " + order1.date + ",");
-        System.out.println("You ordered " + order1.product1Amt + " " + order1.product1 + " at $" + order1.product1Price + " each.");
-        System.out.println("They total up to $" + order1.product1Total + ".");
 
-        System.out.println("You ordered " + order1.product2Amt + " " + order1.product2 + " at $" + order1.product2Price + " each.");
-        System.out.println("They total up to $" + order1.product2Total + ".");
+        System.out.println("On " + order1.getDate() + ",");
+        System.out.println("You ordered " + product1.getAmount() + " " + product1.getName() + " at $" + product1.getPrice() + " each.");
+        System.out.println("They total up to $" + product1.getProductTotal() + ".");
 
-        System.out.println("You ordered " + order1.product3Amt + " " + order1.product3 + " at $" + order1.product3Price + " each.");
-        System.out.println("They total up to $" + order1.product3Total + ".");
+        System.out.println("You ordered " + product2.getAmount() + " " + product2.getName() + " at $" + product2.getPrice() + " each.");
+        System.out.println("They total up to $" + product2.getProductTotal() + ".");
+
+        System.out.println("You ordered " + product3.getAmount() + " " + product3.getName() + " at $" + product3.getPrice() + " each.");
+        System.out.println("They total up to $" + product3.getProductTotal() + ".");
 
         System.out.println("");
-        System.out.println("After tax, your grand total amounts to " + order1.grandTotal + ".");
+        System.out.println("After tax, your grand total amounts to " + order1.getGrandTotal() + ".");
 
 
 
@@ -100,29 +120,24 @@ public class Main {
 
         People person1 = new People();
 
-        person1.name = "Dave";
-        person1.age = 20;
-        person1.address = "123 Maple Ln";
-        person1.isVegetarian = true;
-        person1.hasPet = true;
-        person1.dog.name = "Fido";
-        person1.dog.age = 3;
+        person1.setName("Dave");
+        person1.setAge(20);
+        person1.setAddress("123 Maple Ln");
+        person1.setDog("Fido", 3);
+        person1.dog.setAge(4);    //// Just making sure the setter in dog works to reassign a value I made with constructor
 
-        People person2 = new People();
+        People person2 = new People("Ann", 40);
 
-        person2.name = "Ann";
-        person2.age = 40;
-        person2.address = "222 Google Ln";
-        person2.isVegetarian = false;
-        person2.hasPet = false;
+        person2.setAddress("222 Google Ln");
+        person2.eatsVeggies();
 
-        System.out.println(person1.name + " is " + person1.age + ", and lives at " +
-        person1.address + ". It is " + person1.isVegetarian + " that (s)he doesn't eat meat.");
-        System.out.println(person1.name + " has a Dog named " + person1.dog.name + ", and he is "
-        + person1.dog.age + " years old.");
+        System.out.println(person1.getName() + " is " + person1.getAge() + ", and lives at " +
+        person1.getAddress() + ". It is " + person1.getIsVegetarian() + " that (s)he doesn't eat meat.");
+        System.out.println(person1.getName() + " has a Dog named " + person1.dog.getName() + ", and he is "
+        + person1.dog.getAge() + " years old.");
 
-        System.out.println(person2.name + " is " + person2.age + ", and lives at " +
-        person2.address + ". It is " + person2.isVegetarian + " that (s)he doesn't eat meat.");
+        System.out.println(person2.getName() + " is " + person2.getAge() + ", and lives at " +
+        person2.getAddress() + ". It is " + person2.getIsVegetarian() + " that (s)he doesn't eat meat.");
 
     }
 }

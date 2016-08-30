@@ -4,37 +4,54 @@
  * Database of purchase orders for a company that makes multiple products
  */
 public class PurchaseOrders {
-    String date;
-    String[] products = new String[] {"Golf Balls", "Paper Clips", "Earrings", "Goldfish", "Chandeliers"};
+    private String date;
+    private double tax = 1.0925;  //because Tennessee...
+    private double grandTotal = 0;
 
-    // I wish I could make a 2d array that includes prices, but we haven't mixed strings with numbers yet :(
+    //// Constructors
 
-    String product1;
-    double product1Price;
-    int product1Amt;
-    double product1Total;
+    public PurchaseOrders () {
 
-    String product2;
-    double product2Price;
-    int product2Amt;
-    double product2Total;
+    }
 
-    String product3;
-    double product3Price;
-    int product3Amt;
-    double product3Total;
+    public PurchaseOrders (String d, double[] gt) {
+        date = d;
+        grandTotal = generateGrandTotal(gt);
+        //// Moved logic that generates the grand total to its own method
+    }
 
-    String product4;
-    double product4Price;
-    int product4Amt;
-    double product4Total;
+    //// Setters
 
-    String product5;
-    double product5Price;
-    int product5Amt;
-    double product5Total;
+    public void setDate (String d) {
+        date = d;
+    }
 
-    double tax = 1.0925;  //because Tennessee...
+    public void setGrandTotal (double[] gt) {
+        grandTotal = generateGrandTotal(gt);
+    }
 
-    double grandTotal;
+
+    //// Getters
+
+    public String getDate() {
+            return date;
+    }
+
+    public double getGrandTotal() {
+        return grandTotal;
+    }
+
+
+    //// Other logic
+
+    private double generateGrandTotal (double[] gt) {
+        for (double item : gt) {
+            grandTotal += item;
+        }
+
+        grandTotal = grandTotal * tax;
+
+        return grandTotal;
+    }
+
 }
